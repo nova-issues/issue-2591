@@ -5,6 +5,7 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Text;
 
@@ -44,7 +45,11 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-            Gravatar::make()->maxWidth(50),
+            Image::make('Avatar', 'photo_url')
+               ->disk('public')
+               ->path('avatar')
+               ->nullable()
+               ->disableDownload(),
 
             Text::make('Name')
                 ->sortable()
